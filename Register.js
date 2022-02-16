@@ -26,5 +26,6 @@ setIsSignedIn(true)
 
 
    </View>
+<View> </View>
   );
 }
