@@ -4,20 +4,20 @@ import TextBox from "../components/TextBox"
 import Btn from "../components/Btn"
 import firebase from 'firebase/app';
 import "firebase/auth";
+import "firebase/firestore";
 
-const styles = StyleSheet.create({
-    view: {
-        flex: 1,
-        width: "100%",
-        justifyContent: "center",
-        alignItems: "center"
-    }
-})
+
 
 export default function SignUpScreen({ navigation }) {
 
+    const auth = firebase.auth;
+    const firestore = firebase.firestore;
+
     const [values, setValues] = useState({
+        name: "",
         email: "",
+        location: "",
+        phoneNo: "",
         pwd: "",
         pwd2: ""
     })
@@ -33,11 +33,19 @@ export default function SignUpScreen({ navigation }) {
 
     function SignUp() {
 
-        const { email, pwd, pwd2 } = values
+        const { email, pwd, pwd2, name, location, phoneNo  } = values
 
         if (pwd == pwd2) {
-            firebase.auth().createUserWithEmailAndPassword(email, pwd)
+            auth().createUserWithEmailAndPassword(email, pwd)
                 .then(() => {
+                    firestore().collection("users").doc(auth().currentUser.uid).set({
+                        uid: auth().currentUser.uid,
+                        name,
+                        location,
+                        email,
+                        phoneNo,
+                        pwd2
+                    })
                 })
                 .catch((error) => {
                     alert(error.message)
@@ -49,13 +57,33 @@ export default function SignUpScreen({ navigation }) {
     }
 
     return <View style={styles.view}>
-        <Text style={{ fontSize: 34, fontWeight: "800", marginBottom: 20 }}>Sign Up</Text>
-        <TextBox placeholder="Email Address" onChangeText={text => handleChange(text, "email")} />
-        <TextBox placeholder="Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd")}/>
-        <TextBox placeholder="Confirme Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd2")}/>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%", }}>
-            <Btn onClick={() => SignUp()} title="Sign Up" style={{ width: "48%" }} />
-            <Btn onClick={() => navigation.replace("Login")} title="Login" style={{ width: "48%", backgroundColor: "#344869" }} />
-        </View>
-    </View>
+     <KeyboardAvoidingView>
+
+<Text style={{ fontSize: 34, fontWeight: "800", marginBottom: 10, textAlign:"center"}}>Sign Up</Text>
+<TextBox placeholder="  Full name" onChangeText={text => handleChange(text, "name")} />
+<TextBox placeholder="  +966 Phone Number" onChangeText={text => handleChange(text, "phoneNo")} />
+<TextBox placeholder="  Location" onChangeText={text => handleChange(text, "location")} />
+<TextBox placeholder="  Email Address" onChangeText={text => handleChange(text, "email")} />
+<TextBox placeholder="  Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd")}/>
+<TextBox placeholder="  Confirme Password" secureTextEntry={true}  onChangeText={text => handleChange(text, "pwd2")}/> 
+</KeyboardAvoidingView>
+<View style={{  flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%",}}>
+
+    <Btn onClick={() => SignUp()} title="Sign Up" style={{ width: "50%" }} />
+    <Btn onClick={() => navigation.replace("Login")} title="Login" style={{ width: "48%", backgroundColor: "#344869" }} />
+  
+</View>
+
+</View>
 }
+
+
+const styles = StyleSheet.create({
+    view: {
+        flex: 1,
+        width: "105%",
+        alignContent:"center",
+        justifyContent: "center",
+        alignItems: "stretch"
+    }
+})
