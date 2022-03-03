@@ -9,7 +9,7 @@ import "firebase/auth";
 export default function Loginscreen({navigation}) {
     return <View style={styles.view}>
         <Text style={{fontSize: 34, fontWeight: "800", marginBottom: 20}}>Well-done</Text>
-        {/* <Btn title="Log Out" onClick={() => firebase.auth().signOut()} /> */}
+        { <Btn title="Log Out" onClick={() => firebase.auth().signOut()} /> }
     
        
     </View>
