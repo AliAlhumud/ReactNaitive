@@ -4,8 +4,8 @@ import TextBox from "../components/TextBox"
 import Btn from "../components/Btn"
 import firebase from 'firebase/app';
 import "firebase/auth";
-import { MaterialIcons } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+
+
 
 const styles = StyleSheet.create({
     view: {
@@ -59,7 +59,6 @@ export default function Loginscreen({ navigation }) {
         <Image style={styles.img} source={require('../assets/p1.png')} />
      <Text style={{ fontSize: 20, fontWeight: "800", marginBottom: 20 }}>Smart package storage & delivery</Text> 
         <TextBox placeholder="  Email Address"  onChangeText={text => handleChange(text, "email")} />
-        
         <TextBox placeholder="  Password" onChangeText={text => handleChange(text, "pwd")} secureTextEntry={true} />
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", width: "92%", }}>
             <Btn onClick={() => Login()} title="Login" style={{ width: "48%" }} />
