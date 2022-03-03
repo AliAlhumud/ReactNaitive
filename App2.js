@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from "./screens/Login"
@@ -15,7 +15,14 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const firebaseConfig = {
-    ...... 
+    apiKey: "AIzaSyBrwUItrQc9rDG_AhgwuTFib3p-41-wb_0",
+  authDomain: "finalyearproject-cb4d0.firebaseapp.com",
+  databaseURL: "https://finalyearproject-cb4d0-default-rtdb.firebaseio.com",
+  projectId: "finalyearproject-cb4d0",
+  storageBucket: "finalyearproject-cb4d0.appspot.com",
+  messagingSenderId: "844485039668",
+  appId: "1:844485039668:web:16574f81b00c3e320a9c61",
+  measurementId: "G-N43P3F8WL4"
   };
 
   //Checking if firebase has been initialized
@@ -32,7 +39,7 @@ function App() {
       setIsLoggedIn(false);
     }
   });
-
+  
 
 
   return (
@@ -45,8 +52,7 @@ function App() {
           <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ headerShown: false }} />
         </Stack.Navigator>}
     </NavigationContainer>
-    
   );
-}
+      }
 
 export default App;
